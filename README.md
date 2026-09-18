@@ -57,6 +57,25 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 - MobilityType: constants/MobilityType、types/MobilityType、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - FacilityStatus: constants/FacilityStatus、types/FacilityStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - AssistanceStatus: constants/AssistanceStatus、types/AssistanceStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- FacilityClosureStatus（封控闭环新增）:
+  - 后端：`constants/FacilityClosureStatus.ts`、`models/FacilityClosure.ts`、`repositories/FacilityClosureRepository.ts`、`services/FacilityClosureService.ts`、`constructors/FacilityClosureDtoFactory.ts`、`constants/logTemplates.ts`、`constants/errorCodes.ts`、`constants/errorMessages.ts`、`controllers/FacilityClosureController.ts`、`routes/FacilityClosureRoutes.ts`、`database/init.sql`（部分唯一索引）。
+  - 前端：`constants/FacilityClosureStatus.ts`、`types/FacilityClosure.ts`、`constructors/FacilityClosureConstructor.ts`、`constants/statusText.ts`、`constants/logTemplates.ts`、`constants/errorCodes.ts`、`constants/errorMessages.ts`、`api/FacilityClosure.ts`、`api/http.ts`、`stores/FacilityClosureStore.ts`、`hooks/useFacilityClosureFlow.ts`、`pages/FacilitiesPage.tsx`。
+- BarrierVerifyStatus（待核实障碍判定）: 后端 `constants/BarrierVerifyStatus.ts`、`repositories/BarrierReportRepository.ts`；前端 `constants/BarrierVerifyStatus.ts`、`pages/FacilitiesPage.tsx`、`constants/statusText.ts`。
+- RouteRiskLevel（路线风险/高风险禁派）: 后端 `constants/RouteRiskLevel.ts`、`repositories/RoutePlanRepository.ts`；前端 `constants/RouteRiskLevel.ts`、`components/common/RouteRiskPanel.tsx`、`pages/FacilitiesPage.tsx`、`constants/statusText.ts`。
+
+## 设施封控闭环（/facilities 页面）
+
+巡检员在「设施巡检」页对设施发起封控，业务规则：
+
+1. 封控必须填写**影响范围**与**预计解除时间**（晚于当前时间）。
+2. 封控生效后：设施变为 `BLOCKED`；引用该设施的路线立即停用（`active=false`、`dispatch_allowed=false`）；已派单（REQUESTED/ACCEPTED）的协助请求退回待重派（清空志愿者、`redispatch_required=true`）。
+3. 解除时：设施恢复封控前状态；若该设施仍有 `PENDING` 障碍单，路线**保持 HIGH 高风险并禁止派单**，否则按封控前快照恢复。
+4. 同一设施至多一条 ACTIVE 封控：重复提交返回 `409 CLOSURE_ALREADY_ACTIVE`，并发提交经设施级互斥串行化（30 并发压测仅 1 条 201）。
+5. 并发解除经封控记录级互斥 + `claimActiveById` 抢占保证只生效一次；写操作必须携带 `Idempotency-Key` 请求头（或 `idempotency_key` 字段），刷新重放直接返回首次响应并带 `X-Idempotent-Replay: 1`，同键不同载荷返回 `409 IDEMPOTENCY_CONFLICT`。
+6. 任一步校验失败时，`runInTransaction` 回滚全量内存快照，设施、路线和协助请求保持原样。
+7. 重新派单接口在路线停用或高风险禁派时返回 `409 ROUTE_DISPATCH_FORBIDDEN`。
+
+接口：`POST /api/facility-closure`（封控）、`POST /api/facility-closure/:id/release`（解除）、`GET /api/facility-closure`（回读）、`GET /api/facility-closure/facility/:facilityId/active`、`POST /api/assistance-request/:id/dispatch`（重新派单）。前端运行时冒烟：`cd frontend && npm run smoke`（需后端运行在 `localhost:3000`）。
 
 ## 为什么会牵一发动全身
 

@@ -7,4 +7,5 @@ export interface AssistanceRequest {
   status: string;
   meet_point: string;
   contact_note: string;
+  redispatch_required: boolean;
 }

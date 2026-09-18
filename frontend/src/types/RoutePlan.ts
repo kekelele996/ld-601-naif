@@ -8,4 +8,6 @@ export interface RoutePlan {
   estimated_minutes: number;
   facility_ids: number[];
   created_at: string;
+  active: boolean;
+  dispatch_allowed: boolean;
 }

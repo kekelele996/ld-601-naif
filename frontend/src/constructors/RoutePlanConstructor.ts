@@ -7,9 +7,11 @@ export const createDefaultRoutePlan = (overrides: Partial<RoutePlan> = {}): Rout
   destination_text: "destination text 1" as never,
   route_mode: "route mode 1" as never,
   risk_level: "LOW" as never,
-  estimated_minutes: "estimated minutes 1" as never,
+  estimated_minutes: 12,
   facility_ids: [1,2] as number[],
   created_at: "2026-06-11T09:00:00Z" as never,
+  active: true,
+  dispatch_allowed: true,
   ...overrides
 });
 
