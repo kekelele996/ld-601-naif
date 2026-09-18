@@ -1,0 +1,27 @@
+import express from "express";
+import cors from "cors";
+import { config } from "./config/env";
+import { authMiddleware } from "./middlewares/authMiddleware";
+import { auditLogMiddleware } from "./middlewares/auditLogMiddleware";
+import { requestLoggerMiddleware } from "./middlewares/requestLoggerMiddleware";
+import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware";
+import userProfileRoutes from "./routes/UserProfileRoutes";
+import accessibleFacilityRoutes from "./routes/AccessibleFacilityRoutes";
+import routePlanRoutes from "./routes/RoutePlanRoutes";
+import assistanceRequestRoutes from "./routes/AssistanceRequestRoutes";
+import barrierReportRoutes from "./routes/BarrierReportRoutes";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(requestLoggerMiddleware);
+app.use(authMiddleware);
+app.use(auditLogMiddleware);
+app.get("/health", (_req, res) => res.json({ status: "ok", service: "accessroute" }));
+app.use("/api/user-profile", userProfileRoutes);
+app.use("/api/accessible-facility", accessibleFacilityRoutes);
+app.use("/api/route-plan", routePlanRoutes);
+app.use("/api/assistance-request", assistanceRequestRoutes);
+app.use("/api/barrier-report", barrierReportRoutes);
+app.use(errorHandlerMiddleware);
+app.listen(config.port, () => console.log("accessroute backend listening on", config.port));

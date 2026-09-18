@@ -1,0 +1,1 @@
+import type { Request, Response } from "express"; import { accessibleFacilityService } from "../services/AccessibleFacilityService"; export const accessibleFacilityController = { list: (_req: Request, res: Response) => res.json(accessibleFacilityService.list()), create: (req: Request, res: Response) => res.status(201).json(accessibleFacilityService.create(req.body)) };

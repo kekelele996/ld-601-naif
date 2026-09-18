@@ -1,0 +1,1 @@
+export interface UserProfile { id: number; nickname: string; phone: string; mobility_type: string; assistive_device: string; emergency_contact: string; preferred_language: string; created_at: string }

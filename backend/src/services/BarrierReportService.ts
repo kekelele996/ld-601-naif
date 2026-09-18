@@ -1,0 +1,1 @@
+import { barrierReportRepository } from "../repositories/BarrierReportRepository"; export const barrierReportService = { list: () => barrierReportRepository.findAll(), create: (row: unknown) => barrierReportRepository.save(row) };

@@ -1,0 +1,1 @@
+import { assistanceRequestRepository } from "../repositories/AssistanceRequestRepository"; export const assistanceRequestService = { list: () => assistanceRequestRepository.findAll(), create: (row: unknown) => assistanceRequestRepository.save(row) };

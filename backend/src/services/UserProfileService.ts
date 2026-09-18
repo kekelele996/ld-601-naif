@@ -1,0 +1,1 @@
+import { userProfileRepository } from "../repositories/UserProfileRepository"; export const userProfileService = { list: () => userProfileRepository.findAll(), create: (row: unknown) => userProfileRepository.save(row) };

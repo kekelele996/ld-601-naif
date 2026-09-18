@@ -1,0 +1,1 @@
+import { Router } from "express"; import { userProfileController } from "../controllers/UserProfileController"; const router = Router(); router.get("/", userProfileController.list); router.post("/", userProfileController.create); export default router;

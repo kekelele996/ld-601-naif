@@ -1,0 +1,1 @@
+export const createAccessibleFacilityDto = (overrides = {}) => ({ id: 1, facility_type: "LOW_VISION", name: "name 1", location_code: "location code 1", floor: "floor 1", status: "BLOCKED", last_checked_at: "2026-06-11T09:00:00Z", owner_department: "owner department 1", note: "note 1", ...overrides });

@@ -1,0 +1,1 @@
+import { routePlanRepository } from "../repositories/RoutePlanRepository"; export const routePlanService = { list: () => routePlanRepository.findAll(), create: (row: unknown) => routePlanRepository.save(row) };

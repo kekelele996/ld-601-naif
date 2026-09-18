@@ -1,0 +1,1 @@
+import type { Request, Response } from "express"; import { userProfileService } from "../services/UserProfileService"; export const userProfileController = { list: (_req: Request, res: Response) => res.json(userProfileService.list()), create: (req: Request, res: Response) => res.status(201).json(userProfileService.create(req.body)) };

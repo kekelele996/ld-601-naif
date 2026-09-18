@@ -1,0 +1,1 @@
+export const createUserProfileDto = (overrides = {}) => ({ id: 1, nickname: "nickname 1", phone: "13800000001", mobility_type: "LOW_VISION", assistive_device: "assistive device 1", emergency_contact: "emergency contact 1", preferred_language: "preferred language 1", created_at: "2026-06-11T09:00:00Z", ...overrides });

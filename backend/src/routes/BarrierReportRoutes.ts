@@ -1,0 +1,1 @@
+import { Router } from "express"; import { barrierReportController } from "../controllers/BarrierReportController"; const router = Router(); router.get("/", barrierReportController.list); router.post("/", barrierReportController.create); export default router;

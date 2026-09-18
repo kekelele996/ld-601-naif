@@ -1,0 +1,1 @@
+import { accessibleFacilityRepository } from "../repositories/AccessibleFacilityRepository"; export const accessibleFacilityService = { list: () => accessibleFacilityRepository.findAll(), create: (row: unknown) => accessibleFacilityRepository.save(row) };

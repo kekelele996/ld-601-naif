@@ -1,0 +1,1 @@
+import { Router } from "express"; import { assistanceRequestController } from "../controllers/AssistanceRequestController"; const router = Router(); router.get("/", assistanceRequestController.list); router.post("/", assistanceRequestController.create); export default router;
