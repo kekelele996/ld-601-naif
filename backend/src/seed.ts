@@ -38,7 +38,7 @@ export const seed = {
       "name": "name 1",
       "location_code": "location code 1",
       "floor": "floor 1",
-      "status": "BLOCKED",
+      "status": "AVAILABLE",
       "last_checked_at": "2026-06-11T09:00:00Z",
       "owner_department": "owner department 1",
       "note": "note 1"
@@ -60,7 +60,7 @@ export const seed = {
       "name": "name 3",
       "location_code": "location code 3",
       "floor": "floor 3",
-      "status": "AVAILABLE",
+      "status": "UNKNOWN",
       "last_checked_at": "2026-06-13T09:00:00Z",
       "owner_department": "owner department 3",
       "note": "note 3"
@@ -79,6 +79,7 @@ export const seed = {
         1,
         2
       ],
+      "dispatch_status": "DISPATCHABLE",
       "created_at": "2026-06-11T09:00:00Z"
     },
     {
@@ -93,6 +94,7 @@ export const seed = {
         1,
         2
       ],
+      "dispatch_status": "DISPATCHABLE",
       "created_at": "2026-06-12T09:00:00Z"
     },
     {
@@ -107,6 +109,7 @@ export const seed = {
         1,
         2
       ],
+      "dispatch_status": "DISPATCHABLE",
       "created_at": "2026-06-13T09:00:00Z"
     }
   ],
@@ -117,7 +120,7 @@ export const seed = {
       "route_plan_id": 1,
       "helper_id": 1,
       "request_time": "2026-06-11T09:00:00Z",
-      "status": "BLOCKED",
+      "status": "ACCEPTED",
       "meet_point": "meet point 1",
       "contact_note": "contact note 1"
     },
@@ -127,7 +130,7 @@ export const seed = {
       "route_plan_id": 2,
       "helper_id": 2,
       "request_time": "2026-06-12T09:00:00Z",
-      "status": "MAINTENANCE",
+      "status": "REQUESTED",
       "meet_point": "meet point 2",
       "contact_note": "contact note 2"
     },
@@ -137,7 +140,7 @@ export const seed = {
       "route_plan_id": 3,
       "helper_id": 3,
       "request_time": "2026-06-13T09:00:00Z",
-      "status": "AVAILABLE",
+      "status": "COMPLETED",
       "meet_point": "meet point 3",
       "contact_note": "contact note 3"
     }
@@ -150,8 +153,8 @@ export const seed = {
       "barrier_type": "LOW_VISION",
       "description": "description 1",
       "photo_url": "/mock/photo_url-1.png",
-      "verify_status": "BLOCKED",
-      "priority": "priority 1"
+      "verify_status": "UNVERIFIED",
+      "priority": "HIGH"
     },
     {
       "id": 2,
@@ -160,8 +163,8 @@ export const seed = {
       "barrier_type": "WHEELCHAIR",
       "description": "description 2",
       "photo_url": "/mock/photo_url-2.png",
-      "verify_status": "MAINTENANCE",
-      "priority": "priority 2"
+      "verify_status": "UNVERIFIED",
+      "priority": "MEDIUM"
     },
     {
       "id": 3,
@@ -170,8 +173,8 @@ export const seed = {
       "barrier_type": "ELDERLY",
       "description": "description 3",
       "photo_url": "/mock/photo_url-3.png",
-      "verify_status": "AVAILABLE",
-      "priority": "priority 3"
+      "verify_status": "RESOLVED",
+      "priority": "LOW"
     }
   ]
 } as const;

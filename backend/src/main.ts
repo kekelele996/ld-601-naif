@@ -10,6 +10,7 @@ import accessibleFacilityRoutes from "./routes/AccessibleFacilityRoutes";
 import routePlanRoutes from "./routes/RoutePlanRoutes";
 import assistanceRequestRoutes from "./routes/AssistanceRequestRoutes";
 import barrierReportRoutes from "./routes/BarrierReportRoutes";
+import facilityLockdownRoutes from "./routes/FacilityLockdownRoutes";
 
 const app = express();
 app.use(cors());
@@ -23,5 +24,6 @@ app.use("/api/accessible-facility", accessibleFacilityRoutes);
 app.use("/api/route-plan", routePlanRoutes);
 app.use("/api/assistance-request", assistanceRequestRoutes);
 app.use("/api/barrier-report", barrierReportRoutes);
+app.use("/api/facility-lockdown", facilityLockdownRoutes);
 app.use(errorHandlerMiddleware);
 app.listen(config.port, () => console.log("accessroute backend listening on", config.port));

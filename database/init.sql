@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS route_plan (
   risk_level TEXT,
   estimated_minutes TEXT,
   facility_ids TEXT,
+  dispatch_status TEXT DEFAULT 'DISPATCHABLE',
+  locked_by_lockdown_id INTEGER,
   created_at TEXT
 );
 
@@ -54,6 +56,30 @@ CREATE TABLE IF NOT EXISTS barrier_report (
   verify_status TEXT,
   priority TEXT
 );
+
+-- Facility lockdown closed loop: at most one ACTIVE row per facility.
+CREATE TABLE IF NOT EXISTS facility_lockdown (
+  id INTEGER PRIMARY KEY,
+  facility_id INTEGER NOT NULL,
+  inspector_id INTEGER,
+  impact_scope TEXT NOT NULL,
+  expected_release_at TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'ACTIVE',
+  idempotency_key TEXT NOT NULL,
+  release_idempotency_key TEXT,
+  route_snapshots TEXT,
+  affected_route_ids TEXT,
+  returned_assistance_ids TEXT,
+  unresolved_barrier_on_release BOOLEAN DEFAULT FALSE,
+  created_at TEXT,
+  released_at TEXT
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_facility_lockdown_active
+  ON facility_lockdown (facility_id)
+  WHERE status = 'ACTIVE';
+CREATE UNIQUE INDEX IF NOT EXISTS ux_facility_lockdown_idem
+  ON facility_lockdown (idempotency_key);
 
 CREATE TABLE IF NOT EXISTS audit_log (
   id INTEGER PRIMARY KEY,
